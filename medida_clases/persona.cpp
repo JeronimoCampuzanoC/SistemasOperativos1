@@ -52,3 +52,20 @@ void Persona::mostrarResumen() const {
               << " | " << ciudadNacimiento 
               << " | $" << std::fixed << std::setprecision(2) << ingresosAnuales;
 }
+
+static int extraerAno(const std::string& fecha){
+    auto pos = fecha.rfind("/");
+    if (pos == std::string::npos || pos + 1 >= fecha.size()) return 0;
+    return std::stoi(fecha.substr(pos +1));
+}
+
+int Persona::getEdad() const {
+    time_t t = time(nullptr);
+    tm* ahora = localtime(&t);
+    int ano_actual = 1900 +ahora->tm_year;
+    int ano_nac = extraerAno(fechaNacimiento);
+    return (ano_nac >0 && ano_nac <= ano_actual) ? ano_actual - ano_nac : 0;
+}
+
+
+

@@ -64,6 +64,11 @@ public:
      * PARA QUÉ: Visualización eficiente en colecciones grandes.
      */
     void mostrarResumen() const;
+
+
+    int getEdad() const;
+
+
 };
 
 #endif // PERSONA_H

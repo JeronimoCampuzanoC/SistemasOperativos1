@@ -5,6 +5,7 @@
 #include "persona.h"
 #include "generador.h"
 #include "monitor.h"
+#include "personalongeva.h"
 
 /**
  * Muestra el menú principal de la aplicación.
@@ -21,7 +22,9 @@ void mostrarMenu() {
     std::cout << "\n3. Buscar persona por ID";
     std::cout << "\n4. Mostrar estadísticas de rendimiento";
     std::cout << "\n5. Exportar estadísticas a CSV";
-    std::cout << "\n6. Salir";
+    std::cout << "\n6. Persona más longeva por valor y por referencia";
+    std::cout << "\n7. Persona más longeva por ciudad por valor y por referencia";
+    std::cout << "\n8. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -160,7 +163,88 @@ int main() {
                 monitor.exportar_csv();
                 break;
                 
-            case 6: // Salir
+            case 6: {
+                if(!personas || personas->empty()){ std::cout << "\n No hay Datos disponibles. \n"; break;}
+
+                monitor.iniciar_tiempo();
+                long mem_ini_val = monitor.obtener_memoria();
+
+                Persona v = Personalongeva::getPersonaMasLongevaValor(*personas);
+
+                double t_val = monitor.detener_tiempo();
+                long mem_val = monitor.obtener_memoria() - mem_ini_val;
+                monitor.registrar("Más longeva (país) - por valor", t_val, mem_val);
+
+                std::cout << "\nPersona más longeva en el país (POR VALOR)\n";
+                v.mostrar();
+                std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+        
+                monitor.iniciar_tiempo();
+                long mem_ini_ref = monitor.obtener_memoria();
+
+                const Persona& r = Personalongeva::getPersonaMasLongevaRef(*personas);
+
+                double t_ref = monitor.detener_tiempo();
+                long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+                monitor.registrar("Más longeva (país) - por referencia", t_ref, mem_ref);
+
+                std::cout << "\nPersona más longeva en el país (POR REFERENCIA)\n";
+                r.mostrar();
+                std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+                break;
+            }
+
+            case 7: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay Datos disponibles.\n";
+                    break;
+                }
+            
+                
+                monitor.iniciar_tiempo();
+                long mem_ini_val = monitor.obtener_memoria();
+            
+                auto mapaVal = Personalongeva::getPersonaMasLongevaCiudadValor(*personas);
+            
+                double t_val = monitor.detener_tiempo();
+                long mem_val = monitor.obtener_memoria() - mem_ini_val;
+                monitor.registrar("Más longeva por ciudad - por valor", t_val, mem_val);
+            
+                std::cout << "\nMás longeva por ciudad (POR VALOR)\n";
+                std::cout << "Ciudades: " << mapaVal.size()
+                          << " | Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+                for (const auto& kv : mapaVal) {
+                    std::cout << "\nCiudad: " << kv.first << "\n";
+                    kv.second.mostrarResumen(); std::cout << "\n";
+                }
+            
+    
+                monitor.iniciar_tiempo();
+                long mem_ini_ref = monitor.obtener_memoria();
+            
+                auto mapaRef = Personalongeva::getPersonaMasLongevaCiudadRef(*personas);
+            
+                double t_ref = monitor.detener_tiempo();
+                long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+                monitor.registrar("Más longeva por ciudad - por referencia", t_ref, mem_ref);
+            
+                std::cout << "\nMás longeva por ciudad (POR REFERENCIA)\n";
+                std::cout << "Ciudades: " << mapaRef.size()
+                          << " | Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+                for (const auto& kv : mapaRef) {
+                    std::cout << "\nCiudad: " << kv.first << "\n";
+                    kv.second->mostrarResumen(); std::cout << "\n";
+                }
+            
+                std::cout << "\nTIEMPO Y MEMORIA\n";
+                std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+                std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+            
+                break;
+            }
+
+            case 8: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -175,7 +259,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 6);
+    } while(opcion != 8);
     
     return 0;
 }
