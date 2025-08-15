@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include "persona.h"
 using namespace std;
 
@@ -12,8 +13,8 @@ public:
     static Persona personaMayorPatrimonioPaisRef(const std::vector<Persona> &personas);
     static Persona personaMayorPatrimonioPaisValor(const std::vector<Persona> &personas);
 
-    static Persona personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas, const std::string &ciudad);
-    static Persona personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas, const std::string &ciudad);
+    static std::map<std::string, const Persona *> personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas);
+    static std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas);
 
     static Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, char grupoDeclaracion);
     static Persona personaMayorPatrimonioGrupoValor(const std::vector<Persona> &personas, char grupoDeclaracion);

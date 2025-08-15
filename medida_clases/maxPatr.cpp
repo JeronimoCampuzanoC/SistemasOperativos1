@@ -84,62 +84,66 @@ Persona maxPatr::personaMayorPatrimonioPaisValor(const std::vector<Persona> &per
     return mayor;
 }
 
-// Método que retorna la persona con mayor patrimonio en una ciudad específica por referencia
-Persona maxPatr::personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas, const std::string &ciudad)
+// Método que retorna la persona con mayor patrimonio de cada ciudad por referencia
+std::map<std::string, const Persona *> maxPatr::personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas)
 {
     if (personas.empty())
     {
         throw std::runtime_error("No hay personas en la lista");
     }
 
-    const Persona *mayor = nullptr;
+    std::map<std::string, const Persona *> mayoresPorCiudad;
+
     for (const auto &persona : personas)
     {
-        if (persona.getCiudadNacimiento() == ciudad)
+        const std::string &ciudad = persona.getCiudadNacimiento();
+
+        // Buscar si ya existe esta ciudad en el mapa
+        auto it = mayoresPorCiudad.find(ciudad);
+
+        // Si esta ciudad no está en el mapa o esta persona tiene mayor patrimonio
+        if (it == mayoresPorCiudad.end())
         {
-            if (!mayor || persona.getPatrimonio() > mayor->getPatrimonio())
-            {
-                mayor = &persona;
-            }
+            mayoresPorCiudad.insert(std::make_pair(ciudad, &persona)); // Primera persona de esta ciudad
+        }
+        else if (persona.getPatrimonio() > it->second->getPatrimonio())
+        {
+            it->second = &persona; // Actualizar con la persona de mayor patrimonio
         }
     }
-    if (!mayor)
-    {
-        throw std::runtime_error("No se encontró persona en la ciudad especificada");
-    }
-    return *mayor;
+
+    return mayoresPorCiudad;
 }
 
-// Método que retorna la persona con mayor patrimonio en una ciudad específica por valor
-Persona maxPatr::personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas, const std::string &ciudad)
+// Método que retorna la persona con mayor patrimonio de cada ciudad por valor
+std::map<std::string, Persona> maxPatr::personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas)
 {
     if (personas.empty())
     {
         throw std::runtime_error("No hay personas en la lista");
     }
 
-    bool encontrado = false;
-    Persona mayor("", "", "", "", "", 0.0, 0.0, 0.0, false); // Constructor completo
+    std::map<std::string, Persona> mayoresPorCiudad;
+
     for (const auto &persona : personas)
     {
-        if (persona.getCiudadNacimiento() == ciudad)
+        const std::string &ciudad = persona.getCiudadNacimiento();
+
+        // Buscar si ya existe esta ciudad en el mapa
+        auto it = mayoresPorCiudad.find(ciudad);
+
+        // Si esta ciudad no está en el mapa o esta persona tiene mayor patrimonio
+        if (it == mayoresPorCiudad.end())
         {
-            if (!encontrado)
-            {
-                mayor = persona;
-                encontrado = true;
-            }
-            else if (persona.getPatrimonio() > mayor.getPatrimonio())
-            {
-                mayor = persona;
-            }
+            mayoresPorCiudad.insert(std::make_pair(ciudad, persona)); // Primera persona de esta ciudad
+        }
+        else if (persona.getPatrimonio() > it->second.getPatrimonio())
+        {
+            it->second = persona; // Actualizar con la persona de mayor patrimonio
         }
     }
-    if (!encontrado)
-    {
-        throw std::runtime_error("No se encontró persona en la ciudad especificada");
-    }
-    return mayor;
+
+    return mayoresPorCiudad;
 }
 
 // Método que retorna la persona con mayor patrimonio en un grupo de declaración por referencia
