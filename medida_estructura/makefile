@@ -2,10 +2,10 @@
 
 # Configuración del compilador
 CXX := g++
-CXXFLAGS := -Wall -Wextra -pedantic -std=c++14  # Usando C++14 para std::make_unique
+CXXFLAGS := -Wall -Wextra -pedantic -std=c++14 -g # Usando C++14 para std::make_unique
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp
+SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp persona.cpp
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
 
@@ -23,7 +23,13 @@ generador.o: generador.cpp generador.h persona.h
 monitor.o: monitor.cpp monitor.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-main.o: main.cpp persona.h generador.h monitor.h
+personalongeva.o: personalongeva.cpp personalongeva.h persona.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+main.o: main.cpp persona.h generador.h monitor.h personalongeva.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+persona.o: persona.cpp persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Limpia archivos generados

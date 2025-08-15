@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(gdb) Launch programa",
+      "name": "(gdb) Launch programa (estructuras)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/programa",
@@ -22,8 +22,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jsl/Documents/2025-2/Sistemas operativos/SistemasOperativos1/medida_clases",
-      "program": "/home/jsl/Documents/2025-2/Sistemas operativos/SistemasOperativos1/medida_clases/build/Debug/outDebug",
+      "cwd": "/home/jsl/Documents/2025-2/Sistemas operativos/SistemasOperativos1/medida_estructura",
+      "program": "/home/jsl/Documents/2025-2/Sistemas operativos/SistemasOperativos1/medida_estructura/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

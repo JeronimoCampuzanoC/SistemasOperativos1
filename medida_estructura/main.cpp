@@ -5,6 +5,7 @@
 #include "persona.h"
 #include "generador.h"
 #include "monitor.h" // Nuevo header para monitoreo
+#include "personalongeva.h"
 
 void mostrarMenu() {
     std::cout << "\n\n=== MENÚ PRINCIPAL ===";
@@ -14,7 +15,9 @@ void mostrarMenu() {
     std::cout << "\n3. Buscar persona por ID";
     std::cout << "\n4. Mostrar estadísticas de rendimiento";
     std::cout << "\n5. Exportar estadísticas a CSV";
-    std::cout << "\n6. Salir";
+    std::cout << "\n6. Persona Más longeva en el País (Por valor y por referencia)";
+    std::cout << "\n7. Persona Más longeva por ciudad (Por valor y por referencia)";
+    std::cout << "\n8. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -137,8 +140,55 @@ int main() {
             case 5:
                 monitor.exportar_csv();
                 break;
-                
-            case 6:
+            
+            case 6: {
+                if (!personas || personas->empty()){std::cout << "\n No hay datos \n"; break;}
+                monitor.iniciar_tiempo(); long mem0 = monitor.obtener_memoria();
+                Persona v = PersonaMasLongevaValor(*personas);
+                double t_val = monitor.detener_tiempo(); long mem_val = monitor.obtener_memoria()-mem0;
+                monitor.registrar("Persona Longeva (Valor): ", t_val, mem_val);
+                std::cout << "\nPersona más longeva del País (por valor)\n"; v.mostrar(); std::cout << "\n";
+                std::cout << "Tiempo: " << t_val << " ms, Memoria: " << mem_val << " KB\n";
+
+                monitor.iniciar_tiempo(); long mem0_ref = monitor.obtener_memoria();
+                const Persona& r = PersonaMasLongevaRef(*personas);
+                double t_ref = monitor.detener_tiempo(); long mem_ref = monitor.obtener_memoria()-mem0_ref;
+                monitor.registrar("Persona Longeva (Ref): ", t_ref, mem_ref);
+                std::cout << "\nPersona más longeva del País (por Referencia)\n"; r.mostrar(); std::cout << "\n";
+                std::cout << "Tiempo: " << t_ref << " ms, Memoria: " << mem_ref << " KB\n";
+                break;
+            }
+            case 7: { 
+                if (!personas || personas->empty()) { std::cout << "\nNo hay datos.\n"; break; }
+            
+                // por valor
+                monitor.iniciar_tiempo(); long mem0 = monitor.obtener_memoria();
+                auto mVal = PersonaMasLongevaCiudadValor(*personas);
+                double t_val = monitor.detener_tiempo(); long mem_val = monitor.obtener_memoria() - mem0;
+                monitor.registrar("Longeva por ciudad (valor)", t_val, mem_val);
+            
+                std::cout << "\nPersona Más Longeva por ciudad (Valor)\n";
+                std::cout << "Ciudades: " << mVal.size() << " | Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+                for (auto& kv : mVal) { std::cout << kv.first << ": "; kv.second.mostrarResumen(); std::cout << "\n"; }
+            
+                // por referencia
+                monitor.iniciar_tiempo(); mem0 = monitor.obtener_memoria();
+                auto mRef = PersonaMasLongevaPorCiudadRef(*personas);
+                double t_ref = monitor.detener_tiempo(); long mem_ref = monitor.obtener_memoria() - mem0;
+                monitor.registrar("Longeva por ciudad (ref)", t_ref, mem_ref);
+            
+                std::cout << "\nPersona Más Longeva por ciudad (Referencia)\n";
+                std::cout << "Ciudades: " << mRef.size() << " | Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+                for (auto& kv : mRef) { std::cout << kv.first << ": "; kv.second->mostrarResumen(); std::cout << "\n"; }
+
+                std::cout << "\nTIEMPO Y MEMORIA\n";
+                std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+                std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+            
+                break;
+            }
+
+            case 8:
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -153,7 +203,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 6);
+    } while(opcion != 8);
     
     return 0;
 }
