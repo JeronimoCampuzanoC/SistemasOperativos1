@@ -1,0 +1,32 @@
+# Compiled object files
+*.o
+
+# Compiled binary files
+*.out
+*.exe
+
+# Backup files
+*~
+*.bak
+
+# Editor files
+*.swp
+*.swo
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# CMake and build directories
+/build/
+/cmake-build-*/
+
+# VSCode settings
+.vscode/
+
+# CLion settings
+.idea/
