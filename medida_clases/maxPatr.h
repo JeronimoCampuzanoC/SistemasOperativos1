@@ -19,6 +19,9 @@ public:
     static Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, char grupoDeclaracion);
     static Persona personaMayorPatrimonioGrupoValor(const std::vector<Persona> &personas, char grupoDeclaracion);
 
+    static Persona maxPatrimonioIngresosRef(const std::vector<Persona> &personas);
+    static Persona maxPatrimonioIngresosVal(const std::vector<Persona> &personas);
+
 private:
     // Método auxiliar para determinar el grupo según los últimos dígitos del ID
     static char determinarGrupo(const std::string &id);

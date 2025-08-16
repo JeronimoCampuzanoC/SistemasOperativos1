@@ -199,3 +199,33 @@ Persona maxPatr::personaMayorPatrimonioGrupoValor(const std::vector<Persona> &pe
     }
     return mayor;
 }
+
+Persona maxPatr::maxPatrimonioIngresosRef(const std::vector<Persona> &personas)
+{
+    const Persona *maximo = nullptr;
+
+    for (const auto &persona : personas)
+    {
+        if (persona.getPatrimonio() > maximo->getPatrimonio() && persona.getIngresosAnuales() < maximo->getIngresosAnuales())
+        {
+            maximo = &persona;
+        }
+    }
+
+    return *maximo;
+}
+
+Persona maxPatr::maxPatrimonioIngresosVal(const std::vector<Persona> &personas)
+{
+    Persona maximo("", "", "", "", "", 0.0, 0.0, 0.0, false);
+
+    for (const auto &persona : personas)
+    {
+        if (persona.getPatrimonio() > maximo.getPatrimonio() && persona.getIngresosAnuales() < maximo.getIngresosAnuales())
+        {
+            maximo = persona;
+        }
+    }
+
+    return maximo;
+}

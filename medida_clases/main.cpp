@@ -548,7 +548,46 @@ int main()
             break;
         }
 
-        case 12: // Salir
+        case 12:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
+
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona &maxPatrimonioIngresos = maxPatr::maxPatrimonioIngresosRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR REFERENCIA)\n";
+            maxPatrimonioIngresos.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona maxPatrimonioIngresos2 = maxPatr::personaMayorPatrimonioPaisValor(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR VALOR)\n";
+            maxPatrimonioIngresos2.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+            break;
+        }
+
+        case 13: // Salir
         {
             std::cout << "Saliendo...\n";
             break;
@@ -565,7 +604,7 @@ int main()
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
 
-    } while (opcion != 12);
+    } while (opcion != 13);
 
     return 0;
 }
