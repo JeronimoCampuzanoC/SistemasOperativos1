@@ -9,6 +9,7 @@
 #include "personalongeva.h"
 #include "maxPatr.h"
 #include "listRent.h"
+#include "masjovendeclararenta.h"
 using namespace std;
 
 /**
@@ -36,7 +37,8 @@ void mostrarMenu()
     std::cout << "\n10. Persona con mayor patrimonio por grupo de declaración por valor y por referencia";
 
     std::cout << "\n11. Listar y contar declarantes de renta por calendario tributario";
-    std::cout << "\n12. Salir";
+    std::cout << "\n12. Persona más joven declarante de renta por valor y por referencia";
+    std::cout << "\n13. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -547,15 +549,65 @@ int main()
 
             break;
         }
+        case 12:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                break;
+            }
 
-        case 12: // Salir
+            
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            auto optVal = Masjovendeclararenta::masjovenDeclaranteRentaValor(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Más joven declarante - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona más joven que DECLARA (POR VALOR)\n";
+            if (optVal) {
+                optVal->mostrar();
+            } else {
+                std::cout << "No hay ningún declarante de renta.\n";
+            }
+            std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+
+            
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona* ref = Masjovendeclararenta::masjovenDeclaranteRentaRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+            monitor.registrar("Más joven declarante - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona más joven que DECLARA (POR REFERENCIA)\n";
+            if (ref) {
+                ref->mostrar();
+            } else {
+                std::cout << "No hay ningún declarante de renta.\n";
+            }
+            std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+
+            // Comparación
+            std::cout << "\nCOMPARACIÓN:\n";
+            std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+            std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+            break;
+        }
+
+        case 13: // Salir
         {
             std::cout << "Saliendo...\n";
             break;
         }
         default:
             std::cout << "Opción inválida!\n";
-        }
+        }   
 
         // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
         if (opcion >= 0 && opcion <= 3)
@@ -565,7 +617,7 @@ int main()
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
 
-    } while (opcion != 12);
+    } while (opcion != 13);
 
     return 0;
 }
