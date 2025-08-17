@@ -2,10 +2,10 @@
 
 # Configuración del compilador
 CXX := g++
-CXXFLAGS := -Wall -Wextra -pedantic -std=c++14 -g # Usando C++14 para std::make_unique
+CXXFLAGS := -Wall -Wextra -pedantic -std=c++17 -g  
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp persona.cpp
+SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp persona.cpp masJovenDeclaraRenta.cpp
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
 
@@ -26,10 +26,15 @@ monitor.o: monitor.cpp monitor.h
 personalongeva.o: personalongeva.cpp personalongeva.h persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-main.o: main.cpp persona.h generador.h monitor.h personalongeva.h
+# 👇 Incluimos el header nuevo en las dependencias del main
+main.o: main.cpp persona.h generador.h monitor.h personalongeva.h masJovenDeclaraRenta.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 persona.o: persona.cpp persona.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# 👇 Nueva regla para el medidor de “más joven declarante”
+masJovenDeclaraRenta.o: masJovenDeclaraRenta.cpp masJovenDeclaraRenta.h persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Limpia archivos generados

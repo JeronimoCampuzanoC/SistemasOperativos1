@@ -10,3 +10,4 @@ int extraerAno(const std::string& fechaNacimiento){
     }
     return ano;
 }
+

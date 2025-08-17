@@ -27,6 +27,8 @@ struct Persona {
 
 int extraerAno(const std::string& fechaNacimiento);
 
+
+
 // Implementación de métodos inline para mantener la estructura simple
 inline void Persona::mostrar() const {
     std::cout << "-------------------------------------\n";

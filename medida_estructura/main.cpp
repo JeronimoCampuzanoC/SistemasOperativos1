@@ -6,6 +6,7 @@
 #include "generador.h"
 #include "monitor.h" // Nuevo header para monitoreo
 #include "personalongeva.h"
+#include "masJovenDeclaraRenta.h"
 
 void mostrarMenu() {
     std::cout << "\n\n=== MENÚ PRINCIPAL ===";
@@ -17,7 +18,8 @@ void mostrarMenu() {
     std::cout << "\n5. Exportar estadísticas a CSV";
     std::cout << "\n6. Persona Más longeva en el País (Por valor y por referencia)";
     std::cout << "\n7. Persona Más longeva por ciudad (Por valor y por referencia)";
-    std::cout << "\n8. Salir";
+    std::cout << "\n8. Persona más joven que declara renta (Por valor y por referencia)";
+    std::cout << "\n9. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -187,8 +189,58 @@ int main() {
             
                 break;
             }
+            case 8: {
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+            
+                // --- Por VALOR ---
+                monitor.iniciar_tiempo();
+                long mem_ini_val = monitor.obtener_memoria();
+            
+                auto optVal = masJovenDeclaraRentaValor(*personas);
+            
+                double t_val = monitor.detener_tiempo();
+                long mem_val = monitor.obtener_memoria() - mem_ini_val;
+                monitor.registrar("Más joven declarante (Valor)", t_val, mem_val);
+            
+                std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR VALOR)\n";
+                if (optVal) {
+                    optVal->mostrar();  // usa tu mostrar() de Persona (estructuras)
+                    std::cout << "\n";
+                } else {
+                    std::cout << "No hay ningún declarante de renta.\n";
+                }
+                std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+            
+                // --- Por REFERENCIA ---
+                monitor.iniciar_tiempo();
+                long mem_ini_ref = monitor.obtener_memoria();
+            
+                const Persona* pref = masJovenDeclaraRentaRef(*personas);
+            
+                double t_ref = monitor.detener_tiempo();
+                long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+                monitor.registrar("Más joven declarante (Referencia)", t_ref, mem_ref);
+            
+                std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR REFERENCIA)\n";
+                if (pref) {
+                    pref->mostrar();
+                    std::cout << "\n";
+                } else {
+                    std::cout << "No hay ningún declarante de renta.\n";
+                }
+                std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+            
+                // Comparación
+                std::cout << "\nTIEMPO Y MEMORIA\n";
+                std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+                std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+                break;
+            }
 
-            case 8:
+            case 9:
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -203,7 +255,7 @@ int main() {
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 8);
+    } while(opcion != 9);
     
     return 0;
 }
