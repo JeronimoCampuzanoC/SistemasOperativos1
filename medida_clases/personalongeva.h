@@ -4,12 +4,12 @@
 #include <string>
 #include "persona.h"
 
-class Personalongeva{
-    public:
-        static Persona getPersonaMasLongevaValor(const std::vector<Persona>& personas);
-        static const Persona& getPersonaMasLongevaRef(const std::vector<Persona>& personas);
+class Personalongeva
+{
+public:
+    static Persona getPersonaMasLongevaValor(std::vector<Persona> personas);
+    static const Persona &getPersonaMasLongevaRef(const std::vector<Persona> &personas);
 
-        static std::map<std::string, Persona> getPersonaMasLongevaCiudadValor(const std::vector<Persona>& personas);
-        static std::map<std::string, const Persona*> getPersonaMasLongevaCiudadRef(const std::vector<Persona>& personas);
-
+    static std::map<std::string, Persona> getPersonaMasLongevaCiudadValor(const std::vector<Persona> &personas);
+    static std::map<std::string, const Persona *> getPersonaMasLongevaCiudadRef(const std::vector<Persona> &personas);
 };
