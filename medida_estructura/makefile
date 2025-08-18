@@ -5,7 +5,7 @@ CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++17 -g  
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp persona.cpp masJovenDeclaraRenta.cpp
+SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp masJovenDeclaraRenta.cpp
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
 
@@ -30,8 +30,7 @@ personalongeva.o: personalongeva.cpp personalongeva.h persona.h
 main.o: main.cpp persona.h generador.h monitor.h personalongeva.h masJovenDeclaraRenta.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-persona.o: persona.cpp persona.h
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 
 # 👇 Nueva regla para el medidor de “más joven declarante”
 masJovenDeclaraRenta.o: masJovenDeclaraRenta.cpp masJovenDeclaraRenta.h persona.h

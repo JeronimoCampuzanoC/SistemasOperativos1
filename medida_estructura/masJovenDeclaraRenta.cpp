@@ -1,5 +1,7 @@
 #include "masJovenDeclaraRenta.h"
 #include <ctime>
+#include <sstream>
+#include <string>
 
 static int ano_actual() {
     time_t tiempo = time(nullptr);
@@ -7,14 +9,22 @@ static int ano_actual() {
     return 1900 + ahora->tm_year;
 }
 
-std::optional<Persona> masJovenDeclaraRentaValor(const std::vector<Persona>& personas) {
+std::optional<Persona> masJovenDeclaraRentaValor(const std::vector<Persona> personas) {
     const Persona* mas_joven = nullptr;
     int mejor_edad = 0;
 
     const int Y = ano_actual();
     for (const auto& p : personas) {
         if (!p.declaranteRenta) continue;
-        int ano_nac = extraerAno(p.fechaNacimiento);
+        
+        // Extraer el año directamente de la fecha
+        std::stringstream ss(p.fechaNacimiento);
+        std::string token;
+        std::getline(ss, token, '/');  // saltar día
+        std::getline(ss, token, '/');  // saltar mes
+        std::getline(ss, token, '/');  // obtener año
+        int ano_nac = std::stoi(token);
+        
         if (ano_nac <= 0 || ano_nac > Y) continue;
 
         int edad = Y - ano_nac;
@@ -35,7 +45,15 @@ const Persona* masJovenDeclaraRentaRef(const std::vector<Persona>& personas) {
     const int Y = ano_actual();
     for (const auto& p : personas) {
         if (!p.declaranteRenta) continue;
-        int ano_nac = extraerAno(p.fechaNacimiento);
+        
+        // Extraer el año directamente de la fecha
+        std::stringstream ss(p.fechaNacimiento);
+        std::string token;
+        std::getline(ss, token, '/');  // saltar día
+        std::getline(ss, token, '/');  // saltar mes
+        std::getline(ss, token, '/');  // obtener año
+        int ano_nac = std::stoi(token);
+        
         if (ano_nac <= 0 || ano_nac > Y) continue;
 
         int edad = Y - ano_nac;
