@@ -46,7 +46,7 @@ Persona Masjovendeclararenta::masjovenDeclaranteRentaValor(std::vector<Persona> 
     return personas[pos];
 }
 
-const Persona &Masjovendeclararenta::masjovenDeclaranteRentaRef(const std::vector<Persona> &personas)
+const Persona Masjovendeclararenta::masjovenDeclaranteRentaRef(const std::vector<Persona> &personas)
 {
     if (personas.empty())
     {

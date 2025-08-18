@@ -542,7 +542,7 @@ int main()
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
             break;
         }
-        /*
+
         case 13:
         {
             if (!personas || personas->empty())
@@ -554,41 +554,28 @@ int main()
             monitor.iniciar_tiempo();
             long mem_ini_val = monitor.obtener_memoria();
 
-            auto optVal = Masjovendeclararenta::masjovenDeclaranteRentaValor(*personas);
+            Persona optVal = Masjovendeclararenta::masjovenDeclaranteRentaValor(*personas);
 
             double t_val = monitor.detener_tiempo();
             long mem_val = monitor.obtener_memoria() - mem_ini_val;
             monitor.registrar("Más joven declarante - por valor", t_val, mem_val);
 
             std::cout << "\nPersona más joven que DECLARA (POR VALOR)\n";
-            if (optVal)
-            {
-                optVal->mostrar();
-            }
-            else
-            {
-                std::cout << "No hay ningún declarante de renta.\n";
-            }
+            optVal.mostrar();
+
             std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
 
             monitor.iniciar_tiempo();
             long mem_ini_ref = monitor.obtener_memoria();
 
-            const Persona *ref = Masjovendeclararenta::masjovenDeclaranteRentaRef(*personas);
+            const Persona ref = Masjovendeclararenta::masjovenDeclaranteRentaRef(*personas);
 
             double t_ref = monitor.detener_tiempo();
             long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
             monitor.registrar("Más joven declarante - por referencia", t_ref, mem_ref);
 
             std::cout << "\nPersona más joven que DECLARA (POR REFERENCIA)\n";
-            if (ref)
-            {
-                ref->mostrar();
-            }
-            else
-            {
-                std::cout << "No hay ningún declarante de renta.\n";
-            }
+            ref.mostrar();
             std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
 
             // Comparación
@@ -597,7 +584,7 @@ int main()
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
             break;
         }
-        */
+
         case 14: // Salir
         {
             std::cout << "Saliendo...\n";
