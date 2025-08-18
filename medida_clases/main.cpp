@@ -465,88 +465,35 @@ int main()
             }
 
             std::cout << "\n=== DECLARANTES DE RENTA POR CALENDARIO TRIBUTARIO ===\n";
-
-            // Mostrar conteos por grupo
-            monitor.iniciar_tiempo();
-            long mem_ini_conteo = monitor.obtener_memoria();
-
-            int countA = listRent::contarDeclarantesGrupoA(*personas);
-            int countB = listRent::contarDeclarantesGrupoB(*personas);
-            int countC = listRent::contarDeclarantesGrupoC(*personas);
-
-            double t_conteo = monitor.detener_tiempo();
-            long mem_conteo = monitor.obtener_memoria() - mem_ini_conteo;
-            monitor.registrar("Conteo declarantes por grupo", t_conteo, mem_conteo);
-
-            std::cout << "\nCONTEO POR CALENDARIO TRIBUTARIO:\n";
-            std::cout << "Grupo A (dígitos 00-39): " << countA << " declarantes\n";
-            std::cout << "Grupo B (dígitos 40-79): " << countB << " declarantes\n";
-            std::cout << "Grupo C (dígitos 80-99): " << countC << " declarantes\n";
-            std::cout << "Total de declarantes: " << (countA + countB + countC) << "\n";
-            std::cout << "Tiempo de conteo: " << t_conteo << " ms | Memoria: " << mem_conteo << " KB\n";
-
-            // Listar declarantes por grupo (por valor)
+            // Valor
             monitor.iniciar_tiempo();
             long mem_ini_val = monitor.obtener_memoria();
 
-            auto gruposVal = listRent::obtenerDeclarantesPorGrupoValor(*personas);
+            listRent::listarDeclarantesGrupoValor(*personas);
 
             double t_val = monitor.detener_tiempo();
             long mem_val = monitor.obtener_memoria() - mem_ini_val;
-            monitor.registrar("Listado declarantes por grupo - por valor", t_val, mem_val);
+            monitor.registrar("Listar declarantes calendario - por valor", t_val, mem_val);
 
-            std::cout << "\nLISTADO POR CALENDARIO (POR VALOR):\n";
-            for (const auto &grupo : gruposVal)
-            {
-                std::cout << "\n--- GRUPO " << grupo.first << " (" << grupo.second.size() << " declarantes) ---\n";
-                int count = 0;
-                for (const auto &persona : grupo.second)
-                {
-                    std::cout << ++count << ". ";
-                    persona.mostrarResumen();
-                    std::cout << " | Patrimonio: $" << std::fixed << std::setprecision(2) << persona.getPatrimonio() << "\n";
-                    if (count >= 5) // Mostrar solo los primeros 5 de cada grupo para evitar output muy largo
-                    {
-                        std::cout << "   ... y " << (grupo.second.size() - 5) << " más\n";
-                        break;
-                    }
-                }
-            }
-            std::cout << "Tiempo de listado (valor): " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+            std::cout << "\nListar declarantes calendario - por valor\n";
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
 
-            // Listar declarantes por grupo (por referencia)
+            // Referencia
             monitor.iniciar_tiempo();
             long mem_ini_ref = monitor.obtener_memoria();
 
-            auto gruposRef = listRent::obtenerDeclarantesPorGrupoRef(*personas);
+            listRent::listarDeclarantesGrupoRef(*personas);
 
             double t_ref = monitor.detener_tiempo();
             long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
-            monitor.registrar("Listado declarantes por grupo - por referencia", t_ref, mem_ref);
+            monitor.registrar("Listar declarantes calendario - por referencia", t_ref, mem_ref);
 
-            std::cout << "\nLISTADO POR CALENDARIO (POR REFERENCIA):\n";
-            for (const auto &grupo : gruposRef)
-            {
-                std::cout << "\n--- GRUPO " << grupo.first << " (" << grupo.second.size() << " declarantes) ---\n";
-                int count = 0;
-                for (const auto &persona : grupo.second)
-                {
-                    std::cout << ++count << ". ";
-                    persona->mostrarResumen();
-                    std::cout << " | Patrimonio: $" << std::fixed << std::setprecision(2) << persona->getPatrimonio() << "\n";
-                    if (count >= 5) // Mostrar solo los primeros 5 de cada grupo
-                    {
-                        std::cout << "   ... y " << (grupo.second.size() - 5) << " más\n";
-                        break;
-                    }
-                }
-            }
-            std::cout << "Tiempo de listado (referencia): " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+            std::cout << "\nListar declarantes calendario - por referencia\n";
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
 
-            std::cout << "\nCOMPARACIÓN DE RENDIMIENTO:\n";
+            std::cout << "\nCOMPARACIÓN:\n";
             std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
-
             break;
         }
         case 12:
@@ -557,7 +504,6 @@ int main()
                 break;
             }
 
-            
             monitor.iniciar_tiempo();
             long mem_ini_val = monitor.obtener_memoria();
 
@@ -568,27 +514,32 @@ int main()
             monitor.registrar("Más joven declarante - por valor", t_val, mem_val);
 
             std::cout << "\nPersona más joven que DECLARA (POR VALOR)\n";
-            if (optVal) {
+            if (optVal)
+            {
                 optVal->mostrar();
-            } else {
+            }
+            else
+            {
                 std::cout << "No hay ningún declarante de renta.\n";
             }
             std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
 
-            
             monitor.iniciar_tiempo();
             long mem_ini_ref = monitor.obtener_memoria();
 
-            const Persona* ref = Masjovendeclararenta::masjovenDeclaranteRentaRef(*personas);
+            const Persona *ref = Masjovendeclararenta::masjovenDeclaranteRentaRef(*personas);
 
             double t_ref = monitor.detener_tiempo();
             long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
             monitor.registrar("Más joven declarante - por referencia", t_ref, mem_ref);
 
             std::cout << "\nPersona más joven que DECLARA (POR REFERENCIA)\n";
-            if (ref) {
+            if (ref)
+            {
                 ref->mostrar();
-            } else {
+            }
+            else
+            {
                 std::cout << "No hay ningún declarante de renta.\n";
             }
             std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
@@ -607,7 +558,7 @@ int main()
         }
         default:
             std::cout << "Opción inválida!\n";
-        }   
+        }
 
         // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
         if (opcion >= 0 && opcion <= 3)

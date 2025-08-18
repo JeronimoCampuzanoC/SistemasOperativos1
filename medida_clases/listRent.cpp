@@ -45,181 +45,97 @@ char listRent::determinarGrupo(const std::string &id)
 
     return 'X'; // No clasificado
 }
-
-// Métodos para listar declarantes de renta por grupo por valor
-std::vector<Persona> listRent::listarDeclarantesGrupoAValor(const std::vector<Persona> &personas)
+void listRent::listarDeclarantesGrupoValor(std::vector<Persona> personas)
 {
-    std::vector<Persona> grupoA;
+    // Contadores para cada grupo
+    std::vector<Persona> personasA;
+    std::vector<Persona> personasB;
+    std::vector<Persona> personasC;
 
+    // Contar declarantes por grupo
     for (const auto &persona : personas)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'A')
+        char grupo = determinarGrupo(persona.getId());
+        switch (grupo)
         {
-            grupoA.push_back(persona); // Copia por valor
+        case 'A':
+            personasA.push_back(persona);
+            break;
+        case 'B':
+            personasB.push_back(persona);
+            break;
+        case 'C':
+            personasC.push_back(persona);
+            break;
+        default:
+            break;
         }
     }
 
-    return grupoA;
-}
-
-std::vector<Persona> listRent::listarDeclarantesGrupoBValor(const std::vector<Persona> &personas)
-{
-    std::vector<Persona> grupoB;
-
-    for (const auto &persona : personas)
+    // Mostrar resultados
+    std::cout << "Declarantes de Renta por Grupo (Valor):" << std::endl;
+    std::cout << "Grupo A: " << personasA.size() << std::endl;
+    for (size_t i = 0; i < personasA.size(); i++)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'B')
-        {
-            grupoB.push_back(persona); // Copia por valor
-        }
+        std::cout << " - " << personasA[i].getNombre() << " (ID: " << personasA[i].getId() << ")" << std::endl;
     }
 
-    return grupoB;
-}
-
-std::vector<Persona> listRent::listarDeclarantesGrupoCValor(const std::vector<Persona> &personas)
-{
-    std::vector<Persona> grupoC;
-
-    for (const auto &persona : personas)
+    std::cout << "Grupo B: " << personasB.size() << std::endl;
+    for (size_t i = 0; i < personasB.size(); i++)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'C')
-        {
-            grupoC.push_back(persona); // Copia por valor
-        }
+        std::cout << " - " << personasB[i].getNombre() << " (ID: " << personasB[i].getId() << ")" << std::endl;
     }
-
-    return grupoC;
+    std::cout << "Grupo C: " << personasC.size() << std::endl;
+    for (size_t i = 0; i < personasC.size(); i++)
+    {
+        std::cout << " - " << personasC[i].getNombre() << " (ID: " << personasC[i].getId() << ")" << std::endl;
+    }
 }
 
 // Métodos para listar declarantes de renta por grupo por referencia
-std::vector<const Persona *> listRent::listarDeclarantesGrupoARef(const std::vector<Persona> &personas)
+void listRent::listarDeclarantesGrupoRef(const std::vector<Persona> &personas)
 {
-    std::vector<const Persona *> grupoA;
+    // Contadores para cada grupo
+    std::vector<Persona> personasA;
+    std::vector<Persona> personasB;
+    std::vector<Persona> personasC;
 
+    // Contar declarantes por grupo
     for (const auto &persona : personas)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'A')
+        char grupo = determinarGrupo(persona.getId());
+        switch (grupo)
         {
-            grupoA.push_back(&persona); // Referencia/puntero
+        case 'A':
+            personasA.push_back(persona);
+            break;
+        case 'B':
+            personasB.push_back(persona);
+            break;
+        case 'C':
+            personasC.push_back(persona);
+            break;
+        default:
+            break;
         }
     }
 
-    return grupoA;
-}
-
-std::vector<const Persona *> listRent::listarDeclarantesGrupoBRef(const std::vector<Persona> &personas)
-{
-    std::vector<const Persona *> grupoB;
-
-    for (const auto &persona : personas)
+    // Mostrar resultados
+    std::cout << "Declarantes de Renta por Grupo (Valor):" << std::endl;
+    std::cout << "Grupo A: " << personasA.size() << std::endl;
+    for (size_t i = 0; i < personasA.size(); i++)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'B')
-        {
-            grupoB.push_back(&persona); // Referencia/puntero
-        }
+        std::cout << " - " << personasA[i].getNombre() << " (ID: " << personasA[i].getId() << ")" << std::endl;
     }
 
-    return grupoB;
-}
-
-std::vector<const Persona *> listRent::listarDeclarantesGrupoCRef(const std::vector<Persona> &personas)
-{
-    std::vector<const Persona *> grupoC;
-
-    for (const auto &persona : personas)
+    std::cout << "Grupo B: " << personasB.size() << std::endl;
+    for (size_t i = 0; i < personasB.size(); i++)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'C')
-        {
-            grupoC.push_back(&persona); // Referencia/puntero
-        }
+        std::cout << " - " << personasB[i].getNombre() << " (ID: " << personasB[i].getId() << ")" << std::endl;
     }
-
-    return grupoC;
-}
-
-// Métodos para contar declarantes de renta por grupo
-int listRent::contarDeclarantesGrupoA(const std::vector<Persona> &personas)
-{
-    int contador = 0;
-
-    for (const auto &persona : personas)
+    std::cout << "Grupo C: " << personasC.size() << std::endl;
+    for (size_t i = 0; i < personasC.size(); i++)
     {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'A')
-        {
-            contador++;
-        }
+        std::cout << " - " << personasC[i].getNombre() << " (ID: " << personasC[i].getId() << ")" << std::endl;
     }
-
-    return contador;
-}
-
-int listRent::contarDeclarantesGrupoB(const std::vector<Persona> &personas)
-{
-    int contador = 0;
-
-    for (const auto &persona : personas)
-    {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'B')
-        {
-            contador++;
-        }
-    }
-
-    return contador;
-}
-
-int listRent::contarDeclarantesGrupoC(const std::vector<Persona> &personas)
-{
-    int contador = 0;
-
-    for (const auto &persona : personas)
-    {
-        if (persona.getDeclaranteRenta() && determinarGrupo(persona.getId()) == 'C')
-        {
-            contador++;
-        }
-    }
-
-    return contador;
-}
-
-// Método para obtener todos los declarantes agrupados por calendario (valor)
-std::map<char, std::vector<Persona>> listRent::obtenerDeclarantesPorGrupoValor(const std::vector<Persona> &personas)
-{
-    std::map<char, std::vector<Persona>> grupos;
-
-    for (const auto &persona : personas)
-    {
-        if (persona.getDeclaranteRenta())
-        {
-            char grupo = determinarGrupo(persona.getId());
-            if (grupo != 'X')
-            {                                     // Solo si el grupo es válido
-                grupos[grupo].push_back(persona); // Copia por valor
-            }
-        }
-    }
-
-    return grupos;
-}
-
-// Método para obtener todos los declarantes agrupados por calendario (referencia)
-std::map<char, std::vector<const Persona *>> listRent::obtenerDeclarantesPorGrupoRef(const std::vector<Persona> &personas)
-{
-    std::map<char, std::vector<const Persona *>> grupos;
-
-    for (const auto &persona : personas)
-    {
-        if (persona.getDeclaranteRenta())
-        {
-            char grupo = determinarGrupo(persona.getId());
-            if (grupo != 'X')
-            {                                      // Solo si el grupo es válido
-                grupos[grupo].push_back(&persona); // Referencia/puntero
-            }
-        }
-    }
-
-    return grupos;
 }
