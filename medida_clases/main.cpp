@@ -42,7 +42,9 @@ void mostrarMenu()
     std::cout << "\n12. Persona con mayor patrimonio neto del pais, patrimonio - deudas";
 
     std::cout << "\n13. Persona más joven declarante de renta por valor y por referencia";
-    std::cout << "\n14. Salir";
+
+    std::cout << "\n14. Persona con mayor patrimonio y menor ingreso";
+    std::cout << "\n15. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -584,8 +586,45 @@ int main()
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
             break;
         }
+        case 14:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
 
-        case 14: // Salir
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona maxPatrimonioIngresos2 = maxPatr::maxPatrimonioIngresosVal(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR VALOR)\n";
+            maxPatrimonioIngresos2.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona &maxPatrimonioIngresos = maxPatr::maxPatrimonioIngresosRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR REFERENCIA)\n";
+            maxPatrimonioIngresos.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+
+            break;
+        }
+        case 15: // Salir
         {
             std::cout << "Saliendo...\n";
             break;
@@ -602,7 +641,7 @@ int main()
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
 
-    } while (opcion != 14);
+    } while (opcion != 15);
 
     return 0;
 }
