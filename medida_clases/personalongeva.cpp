@@ -87,8 +87,8 @@ const Persona &Personalongeva::getPersonaMasLongevaRef(const std::vector<Persona
     }
     return personas[pos];
 }
-/*
-std::map<std::string, Persona> Personalongeva::getPersonaMasLongevaCiudadValor(const std::vector<Persona> &personas)
+
+std::map<std::string, Persona> Personalongeva::getPersonaMasLongevaCiudadValor(std::vector<Persona> personas)
 {
     std::map<std::string, Persona> res;
 
@@ -104,7 +104,29 @@ std::map<std::string, Persona> Personalongeva::getPersonaMasLongevaCiudadValor(c
         else
         {
 
-            if (p.getEdad() > it->second.getEdad())
+           stringstream ss1(p.getFechaNacimiento());
+            string token1;
+            int day1, month1, year1;
+
+            getline(ss1, token1, '/');
+            day1 = stoi(token1);
+            getline(ss1, token1, '/');
+            month1 = stoi(token1);
+            getline(ss1, token1, '/');
+            year1 = stoi(token1);
+
+            stringstream ss2(it->second.getFechaNacimiento());
+            string token2;
+            int day2, month2, year2;
+
+            getline(ss2, token2, '/');
+            day2 = stoi(token2);
+            getline(ss2, token2, '/');
+            month2 = stoi(token2);
+            getline(ss2, token2, '/');
+            year2 = stoi(token2);
+
+            if (year1 < year2 || (year1 == year2 && month1 < month2) || (year1 == year2 && month1 == month2 && day1 < day2))
             {
                 it->second = p;
             }
@@ -128,7 +150,29 @@ std::map<std::string, const Persona *> Personalongeva::getPersonaMasLongevaCiuda
         }
         else
         {
-            if (p.getEdad() > it->second->getEdad())
+            stringstream ss1(p.getFechaNacimiento());
+            string token1;
+            int day1, month1, year1;
+
+            getline(ss1, token1, '/');
+            day1 = stoi(token1);
+            getline(ss1, token1, '/');
+            month1 = stoi(token1);
+            getline(ss1, token1, '/');
+            year1 = stoi(token1);
+
+            stringstream ss2(it->second->getFechaNacimiento());
+            string token2;
+            int day2, month2, year2;
+
+            getline(ss2, token2, '/');
+            day2 = stoi(token2);
+            getline(ss2, token2, '/');
+            month2 = stoi(token2);
+            getline(ss2, token2, '/');
+            year2 = stoi(token2);
+
+            if (year1 < year2 || (year1 == year2 && month1 < month2) || (year1 == year2 && month1 == month2 && day1 < day2))
             {
                 it->second = &p;
             }
@@ -136,4 +180,5 @@ std::map<std::string, const Persona *> Personalongeva::getPersonaMasLongevaCiuda
     }
     return res;
 }
-*/
+
+

@@ -236,7 +236,7 @@ int main()
             std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
             break;
         }
-        /*
+
         case 7:
         {
             if (!personas || personas->empty())
@@ -289,7 +289,7 @@ int main()
 
             break;
         }
-        */
+
         case 8:
         {
             if (!personas || personas->empty())
