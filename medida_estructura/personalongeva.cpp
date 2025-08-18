@@ -37,20 +37,20 @@ const Persona& PersonaMasLongevaRef(const std::vector<Persona>& personas){
     if (personas.empty()) throw std::runtime_error("No se han encontrado personas");
     size_t pos = 0;
     
-    // Extraer el año de la primera persona
+    
     std::stringstream ss(personas[0].fechaNacimiento);
     std::string token;
-    std::getline(ss, token, '/');  // saltar día
-    std::getline(ss, token, '/');  // saltar mes
-    std::getline(ss, token, '/');  // obtener año
+    std::getline(ss, token, '/');  
+    std::getline(ss, token, '/');  
+    std::getline(ss, token, '/');  
     int ano_na = std::stoi(token);
     
     for (size_t i = 0; i < personas.size(); i++){
-        // Extraer el año de cada persona
+        
         std::stringstream ss2(personas[i].fechaNacimiento);
-        std::getline(ss2, token, '/');  // saltar día
-        std::getline(ss2, token, '/');  // saltar mes
-        std::getline(ss2, token, '/');  // obtener año
+        std::getline(ss2, token, '/');  
+        std::getline(ss2, token, '/');  
+        std::getline(ss2, token, '/');  
         int y = std::stoi(token);
         
         if (y != 0 && (ano_na == 0 || y <ano_na)){ ano_na = y; pos = i;}
@@ -68,7 +68,7 @@ std::map<std::string, Persona> PersonaMasLongevaCiudadValor(const std::vector<Pe
             resultado.emplace(c, p);
         }
         else{
-            // Extraer año de la persona actual
+            
             std::stringstream ss(p.fechaNacimiento);
             std::string token;
             std::getline(ss, token, '/');
@@ -76,7 +76,7 @@ std::map<std::string, Persona> PersonaMasLongevaCiudadValor(const std::vector<Pe
             std::getline(ss, token, '/');
             int y_new = std::stoi(token);
             
-            // Extraer año de la persona guardada
+            
             std::stringstream ss2(it->second.fechaNacimiento);
             std::getline(ss2, token, '/');
             std::getline(ss2, token, '/');
@@ -100,7 +100,7 @@ std::map<std::string, const Persona*>PersonaMasLongevaPorCiudadRef(const std::ve
         if (it == resultado.end()) {
             resultado.emplace(c, &p);                 
         } else {
-            // Extraer año de la persona actual
+          
             std::stringstream ss(p.fechaNacimiento);
             std::string token;
             std::getline(ss, token, '/');
@@ -108,7 +108,7 @@ std::map<std::string, const Persona*>PersonaMasLongevaPorCiudadRef(const std::ve
             std::getline(ss, token, '/');
             int y_new = std::stoi(token);
             
-            // Extraer año de la persona guardada
+            
             std::stringstream ss2(it->second->fechaNacimiento);
             std::getline(ss2, token, '/');
             std::getline(ss2, token, '/');
