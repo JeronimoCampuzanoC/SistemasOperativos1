@@ -11,13 +11,13 @@ class maxPatr
 {
 public:
     static Persona personaMayorPatrimonioPaisRef(const std::vector<Persona> &personas);
-    static Persona personaMayorPatrimonioPaisValor(const std::vector<Persona> &personas);
+    static Persona personaMayorPatrimonioPaisValor(std::vector<Persona> personas);
 
     static std::map<std::string, const Persona *> personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas);
-    static std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas);
+    static std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(std::vector<Persona> personas);
 
     static Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, char grupoDeclaracion);
-    static Persona personaMayorPatrimonioGrupoValor(const std::vector<Persona> &personas, char grupoDeclaracion);
+    static Persona personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char grupoDeclaracion);
 
 private:
     // Método auxiliar para determinar el grupo según los últimos dígitos del ID

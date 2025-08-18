@@ -66,7 +66,7 @@ Persona maxPatr::personaMayorPatrimonioPaisRef(const std::vector<Persona> &perso
 }
 
 // Método que retorna la persona con mayor patrimonio en el país por valor
-Persona maxPatr::personaMayorPatrimonioPaisValor(const std::vector<Persona> &personas)
+Persona maxPatr::personaMayorPatrimonioPaisValor(std::vector<Persona> personas)
 {
     if (personas.empty())
     {
@@ -116,7 +116,7 @@ std::map<std::string, const Persona *> maxPatr::personaMayorPatrimonioCiudadRef(
 }
 
 // Método que retorna la persona con mayor patrimonio de cada ciudad por valor
-std::map<std::string, Persona> maxPatr::personaMayorPatrimonioCiudadVal(const std::vector<Persona> &personas)
+std::map<std::string, Persona> maxPatr::personaMayorPatrimonioCiudadVal(std::vector<Persona> personas)
 {
     if (personas.empty())
     {
@@ -173,7 +173,7 @@ Persona maxPatr::personaMayorPatrimonioGrupoRef(const std::vector<Persona> &pers
 }
 
 // Método que retorna la persona con mayor patrimonio en un grupo de declaración por valor
-Persona maxPatr::personaMayorPatrimonioGrupoValor(const std::vector<Persona> &personas, char grupoDeclaracion)
+Persona maxPatr::personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char grupoDeclaracion)
 {
     if (personas.empty())
     {
@@ -199,3 +199,5 @@ Persona maxPatr::personaMayorPatrimonioGrupoValor(const std::vector<Persona> &pe
     }
     return mayor;
 }
+
+
