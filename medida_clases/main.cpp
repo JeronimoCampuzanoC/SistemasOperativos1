@@ -9,6 +9,7 @@
 #include "personalongeva.h"
 #include "maxPatr.h"
 #include "listRent.h"
+#include "maxPatrNeto.h"
 #include "masjovendeclararenta.h"
 using namespace std;
 
@@ -37,8 +38,11 @@ void mostrarMenu()
     std::cout << "\n10. Persona con mayor patrimonio por grupo de declaración por valor y por referencia";
 
     std::cout << "\n11. Listar y contar declarantes de renta por calendario tributario";
-    std::cout << "\n12. Persona más joven declarante de renta por valor y por referencia";
-    std::cout << "\n13. Salir";
+
+    std::cout << "\n12. Persona con mayor patrimonio neto del pais, patrimonio - deudas";
+
+    std::cout << "\n13. Persona más joven declarante de renta por valor y por referencia";
+    std::cout << "\n14. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -232,7 +236,7 @@ int main()
             std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
             break;
         }
-
+        /*
         case 7:
         {
             if (!personas || personas->empty())
@@ -285,7 +289,7 @@ int main()
 
             break;
         }
-
+        */
         case 8:
         {
             if (!personas || personas->empty())
@@ -500,6 +504,49 @@ int main()
         {
             if (!personas || personas->empty())
             {
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
+
+            std::cout << "\n=== Persona con maximo patrimonio neto ===\n";
+            // Valor
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona v = maxPatrNeto::maxPatrNetoValor(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Persona con maximo patrimonio neto - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con maximo patrimonio neto - por valor\n";
+            v.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << " KB\n";
+
+            // Referencia
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona &v_ref = maxPatrNeto::maxPatrNetoRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+            monitor.registrar("Persona con maximo patrimonio neto - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con maximo patrimonio neto - por referencia\n";
+            v_ref.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << " KB\n";
+
+            std::cout << "\nCOMPARACIÓN:\n";
+            std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+            std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+            break;
+        }
+        /*
+        case 13:
+        {
+            if (!personas || personas->empty())
+            {
                 std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                 break;
             }
@@ -550,8 +597,8 @@ int main()
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
             break;
         }
-
-        case 13: // Salir
+        */
+        case 14: // Salir
         {
             std::cout << "Saliendo...\n";
             break;
@@ -560,7 +607,7 @@ int main()
             std::cout << "Opción inválida!\n";
         }
 
-        // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
+        // Mostrar estadísticas de la operación (excepto para opciones 4,5,6,...)
         if (opcion >= 0 && opcion <= 3)
         {
             double tiempo = monitor.detener_tiempo();
@@ -568,7 +615,7 @@ int main()
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
 
-    } while (opcion != 13);
+    } while (opcion != 14);
 
     return 0;
 }

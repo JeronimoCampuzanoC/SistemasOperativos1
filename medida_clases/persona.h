@@ -4,15 +4,17 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+using namespace std;
 
 /**
  * Clase que representa una persona con datos personales y financieros.
- * 
+ *
  * POR QUÉ: Para modelar una entidad persona con atributos relevantes para el sistema.
  * CÓMO: Mediante una clase con atributos privados y métodos públicos de acceso y visualización.
  * PARA QUÉ: Centralizar y encapsular la información de una persona, garantizando integridad de datos.
  */
-class Persona {
+class Persona
+{
 private:
     std::string nombre;           // Nombre de pila
     std::string apellido;         // Apellidos
@@ -27,15 +29,15 @@ private:
 public:
     /**
      * Constructor para inicializar todos los atributos de la persona.
-     * 
+     *
      * POR QUÉ: Necesidad de crear instancias de Persona con todos sus datos.
      * CÓMO: Recibe cada atributo por valor y los mueve a los miembros correspondientes.
      * PARA QUÉ: Construir objetos Persona completos y válidos.
      */
-    Persona(std::string nom, std::string ape, std::string id, 
-            std::string ciudad, std::string fecha, double ingresos, 
+    Persona(std::string nom, std::string ape, std::string id,
+            std::string ciudad, std::string fecha, double ingresos,
             double patri, double deud, bool declara);
-    
+
     // Métodos de acceso (getters) - Implementados inline para eficiencia
     std::string getNombre() const { return nombre; }
     std::string getApellido() const { return apellido; }
@@ -49,26 +51,21 @@ public:
 
     /**
      * Muestra toda la información de la persona de forma detallada.
-     * 
+     *
      * POR QUÉ: Para inspeccionar todos los datos de una persona en formato legible.
      * CÓMO: Imprime en la salida estándar con formato.
      * PARA QUÉ: Depuración y visualización completa de un registro.
      */
     void mostrar() const;
-    
+
     /**
      * Muestra un resumen de la persona (ID, nombre, ciudad, ingresos).
-     * 
+     *
      * POR QUÉ: Para listar personas de forma compacta en listados.
      * CÓMO: Imprime solo los datos más relevantes.
      * PARA QUÉ: Visualización eficiente en colecciones grandes.
      */
     void mostrarResumen() const;
-
-
-    int getEdad() const;
-
-
 };
 
 #endif // PERSONA_H

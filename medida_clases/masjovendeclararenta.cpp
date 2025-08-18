@@ -1,5 +1,5 @@
 #include "masjovendeclararenta.h"
-
+/*
 std::optional<Persona> Masjovendeclararenta::masjovenDeclaranteRentaValor(const std::vector<Persona>& personas) {
     const Persona* masjoven = nullptr;
 
@@ -31,3 +31,4 @@ const Persona* Masjovendeclararenta::masjovenDeclaranteRentaRef(const std::vecto
 
     return masjoven;  // puede ser nullptr si no hay ninguno
 }
+*/

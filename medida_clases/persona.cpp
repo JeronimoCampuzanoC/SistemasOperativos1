@@ -3,32 +3,33 @@
 
 /**
  * Implementación del constructor de Persona.
- * 
+ *
  * POR QUÉ: Inicializar los miembros de la clase.
  * CÓMO: Usando la lista de inicialización y moviendo los strings para evitar copias.
  * PARA QUÉ: Eficiencia y correcta construcción del objeto.
  */
-Persona::Persona(std::string nom, std::string ape, std::string id, 
-                 std::string ciudad, std::string fecha, double ingresos, 
+Persona::Persona(std::string nom, std::string ape, std::string id,
+                 std::string ciudad, std::string fecha, double ingresos,
                  double patri, double deud, bool declara)
-    : nombre(std::move(nom)), 
-      apellido(std::move(ape)), 
-      id(std::move(id)), 
+    : nombre(std::move(nom)),
+      apellido(std::move(ape)),
+      id(std::move(id)),
       ciudadNacimiento(std::move(ciudad)),
-      fechaNacimiento(std::move(fecha)), 
-      ingresosAnuales(ingresos), 
+      fechaNacimiento(std::move(fecha)),
+      ingresosAnuales(ingresos),
       patrimonio(patri),
-      deudas(deud), 
+      deudas(deud),
       declaranteRenta(declara) {}
 
 /**
  * Implementación de mostrar.
- * 
+ *
  * POR QUÉ: Mostrar todos los datos de la persona de forma estructurada.
  * CÓMO: Usando flujos de salida y formateadores.
  * PARA QUÉ: Facilitar la lectura de los datos completos de una persona.
  */
-void Persona::mostrar() const {
+void Persona::mostrar() const
+{
     std::cout << "-------------------------------------\n";
     std::cout << "[" << id << "] Nombre: " << nombre << " " << apellido << "\n";
     std::cout << "   - Ciudad de nacimiento: " << ciudadNacimiento << "\n";
@@ -42,30 +43,14 @@ void Persona::mostrar() const {
 
 /**
  * Implementación de mostrarResumen.
- * 
+ *
  * POR QUÉ: Mostrar información esencial de la persona en una sola línea.
  * CÓMO: Imprime ID, nombre completo, ciudad e ingresos.
  * PARA QUÉ: Listados rápidos y eficientes.
  */
-void Persona::mostrarResumen() const {
+void Persona::mostrarResumen() const
+{
     std::cout << "[" << id << "] " << nombre << " " << apellido
-              << " | " << ciudadNacimiento 
+              << " | " << ciudadNacimiento
               << " | $" << std::fixed << std::setprecision(2) << ingresosAnuales;
 }
-
-static int extraerAno(const std::string& fecha){
-    auto pos = fecha.rfind("/");
-    if (pos == std::string::npos || pos + 1 >= fecha.size()) return 0;
-    return std::stoi(fecha.substr(pos +1));
-}
-
-int Persona::getEdad() const {
-    time_t t = time(nullptr);
-    tm* ahora = localtime(&t);
-    int ano_actual = 1900 +ahora->tm_year;
-    int ano_nac = extraerAno(fechaNacimiento);
-    return (ano_nac >0 && ano_nac <= ano_actual) ? ano_actual - ano_nac : 0;
-}
-
-
-

@@ -23,7 +23,7 @@ CXXFLAGS = -Wall -Wextra -pedantic -std=c++17 -O2  # Flags de compilación:
 # POR QUÉ: Identificar todos los componentes del proyecto
 # CÓMO: Listar archivos fuente y calcular objetos correspondientes
 # PARA QUÉ: Automatizar el proceso de compilación
-SRC = main.cpp persona.cpp generador.cpp monitor.cpp personalongeva.cpp maxPatr.cpp listRent.cpp masjovendeclararenta.cpp  # Fuentes principales
+SRC = main.cpp persona.cpp generador.cpp monitor.cpp personalongeva.cpp maxPatr.cpp listRent.cpp maxPatrNeto.cpp masjovendeclararenta.cpp  # Fuentes principales
 OBJ = $(SRC:.cpp=.o)            # Generar nombres de objetos (.o) a partir de fuentes
 EXEC = programa                 # Nombre del ejecutable final
 
