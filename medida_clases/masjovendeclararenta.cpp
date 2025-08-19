@@ -21,6 +21,7 @@ Persona Masjovendeclararenta::masjovenDeclaranteRentaValor(std::vector<Persona> 
 
     for (size_t i = 1; i < personas.size(); i++)
     {
+        // Realizar las comparaciones con una persona que declare
         if (personas[pos].getDeclaranteRenta() == false && personas[i].getDeclaranteRenta() == true)
         {
             std::stringstream ss2(personas[i].getFechaNacimiento());
@@ -33,7 +34,7 @@ Persona Masjovendeclararenta::masjovenDeclaranteRentaValor(std::vector<Persona> 
             month = std::stoi(token2);
             std::getline(ss2, token2, '/');
             year = std::stoi(token2);
-
+            // Primero se compara el año, luego el mes y por ultimo el dia
             if (year > yearM || (year == yearM && month > monthM) || (year == yearM && month == monthM && day > dayM))
             {
                 pos = i;

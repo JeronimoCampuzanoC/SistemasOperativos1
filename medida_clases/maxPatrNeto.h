@@ -8,10 +8,10 @@
 class maxPatrNeto
 {
 public:
-    // Returns the maximum net worth by value
+    // Devuelve el patrimonio max de una persona por valor
     static Persona maxPatrNetoValor(std::vector<Persona> personas);
 
-    // Returns the maximum net worth by reference
+    // Devuelve el patrimonio max de una persona por referencia
     static Persona maxPatrNetoRef(const std::vector<Persona> &personas);
 };
 

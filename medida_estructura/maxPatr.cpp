@@ -1,6 +1,7 @@
 #include "maxPatr.h"
 #include <stdexcept>
 
+// Extrae los últimos dos dígitos de un ID
 int extraerUltimosDigitos1(const std::string &id)
 {
     if (id.length() < 2)
@@ -17,12 +18,13 @@ int extraerUltimosDigitos1(const std::string &id)
     }
 }
 
+// Determina el grupo de declaración de una persona
 char determinarGrupo1(const std::string &id)
 {
     int ultimosDigitos = extraerUltimosDigitos1(id);
 
     if (ultimosDigitos == -1)
-        return 'X'; // Error en formato
+        return 'X'; // Error en el formato de alguna manera
 
     // Grupo A: 00-39
     if (ultimosDigitos >= 0 && ultimosDigitos <= 39)
@@ -40,9 +42,10 @@ char determinarGrupo1(const std::string &id)
         return 'C';
     }
 
-    return 'X'; // No clasificado
+    return 'X'; // No clasificado :P
 }
 
+// Determina la persona registrada con mayor patrimonio de todo el pais, por Referencia
 Persona personaMayorPatrimonioPaisRef(const std::vector<Persona> &personas)
 {
     if (personas.empty())
@@ -61,6 +64,7 @@ Persona personaMayorPatrimonioPaisRef(const std::vector<Persona> &personas)
     return *mayor;
 }
 
+// Determina la persona registrada con mayor patrimonio de todo el pais, por Valor
 Persona personaMayorPatrimonioPaisValor(std::vector<Persona> personas)
 {
     if (personas.empty())
@@ -79,6 +83,7 @@ Persona personaMayorPatrimonioPaisValor(std::vector<Persona> personas)
     return mayor;
 }
 
+// Determina la persona de cada ciudad que esta registrada con el mayor patrimonio, por Referencia
 std::map<std::string, const Persona *> personaMayorPatrimonioCiudadRef(const std::vector<Persona> &personas)
 {
     if (personas.empty())
@@ -95,10 +100,9 @@ std::map<std::string, const Persona *> personaMayorPatrimonioCiudadRef(const std
         // Buscar si ya existe esta ciudad en el mapa
         auto it = mayoresPorCiudad.find(ciudad);
 
-        // Si esta ciudad no está en el mapa o esta persona tiene mayor patrimonio
         if (it == mayoresPorCiudad.end())
         {
-            mayoresPorCiudad.insert(std::make_pair(ciudad, &persona)); // Primera persona de esta ciudad
+            mayoresPorCiudad.insert(std::make_pair(ciudad, &persona));
         }
         else if (persona.patrimonio > it->second->patrimonio)
         {
@@ -109,6 +113,7 @@ std::map<std::string, const Persona *> personaMayorPatrimonioCiudadRef(const std
     return mayoresPorCiudad;
 }
 
+// Determina la persona de cada ciudad que esta registrada con el mayor patrimonio, por Valor
 std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(std::vector<Persona> personas)
 {
     if (personas.empty())
@@ -125,10 +130,9 @@ std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(std::vector<Perso
         // Buscar si ya existe esta ciudad en el mapa
         auto it = mayoresPorCiudad.find(ciudad);
 
-        // Si esta ciudad no está en el mapa o esta persona tiene mayor patrimonio
         if (it == mayoresPorCiudad.end())
         {
-            mayoresPorCiudad.insert(std::make_pair(ciudad, persona)); // Primera persona de esta ciudad
+            mayoresPorCiudad.insert(std::make_pair(ciudad, persona));
         }
         else if (persona.patrimonio > it->second.patrimonio)
         {
@@ -139,6 +143,7 @@ std::map<std::string, Persona> personaMayorPatrimonioCiudadVal(std::vector<Perso
     return mayoresPorCiudad;
 }
 
+// Determina la persona de cada grupo de Declaración de Renta que este registrada con mayor patrimonio, por Referencia
 Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, char grupoDeclaracion)
 {
     if (personas.empty())
@@ -164,6 +169,7 @@ Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, cha
     return *mayor;
 }
 
+// Determina la persona de cada grupo de Declaración de Renta que este registrada con mayor patrimonio, por Valor
 Persona personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char grupoDeclaracion)
 {
     if (personas.empty())
@@ -191,6 +197,7 @@ Persona personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char gru
     return mayor;
 }
 
+// Determina la persona mas importante para la DIAN, la que tiene mayor patrimonio con menos ingresos, por Referencia
 Persona maxPatrimonioIngresosRef(const std::vector<Persona> &personas)
 {
     Persona maximo = personas[0];
@@ -209,6 +216,7 @@ Persona maxPatrimonioIngresosRef(const std::vector<Persona> &personas)
     return maximo;
 }
 
+// Determina la persona mas importante para la DIAN, la que tiene mayor patrimonio con menos ingresos, por Valor
 Persona maxPatrimonioIngresosVal(std::vector<Persona> personas)
 {
     Persona maximo = personas[0];
