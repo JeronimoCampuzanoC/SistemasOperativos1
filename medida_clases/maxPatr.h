@@ -1,5 +1,5 @@
-#ifndef MAXPATRPAIS_H
-#define MAXPATRPAIS_H
+#ifndef MAXPATR_H
+#define MAXPATR_H
 
 #include <iostream>
 #include <vector>
