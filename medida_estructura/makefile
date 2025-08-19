@@ -5,9 +5,15 @@ CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++17 -g  
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp masJovenDeclaraRenta.cpp
+SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp masJovenDeclaraRenta.cpp listRent.cpp maxPatrNeto.cpp
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
+# Regla para maxPatrNeto
+maxPatrNeto.o: maxPatrNeto.cpp maxPatrNeto.h persona.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Regla para listRent
+listRent.o: listRent.cpp listRent.h persona.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Objetivo principal: compilar el ejecutable
 all: $(EXEC)
@@ -27,7 +33,7 @@ personalongeva.o: personalongeva.cpp personalongeva.h persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # 👇 Incluimos el header nuevo en las dependencias del main
-main.o: main.cpp persona.h generador.h monitor.h personalongeva.h masJovenDeclaraRenta.h
+main.o: main.cpp persona.h generador.h monitor.h personalongeva.h masJovenDeclaraRenta.h 
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 
