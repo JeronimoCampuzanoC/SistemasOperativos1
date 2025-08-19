@@ -4,8 +4,8 @@
 #include <string>
 #include "persona.h"
 
-int extraerUltimosDigitos(const std::string &id);
-char determinarGrupo(const std::string &id);
+int extraerUltimosDigitos1(const std::string &id);
+char determinarGrupo1(const std::string &id);
 
 Persona personaMayorPatrimonioPaisRef(const std::vector<Persona> &personas);
 Persona personaMayorPatrimonioPaisValor(std::vector<Persona> personas);
@@ -18,4 +18,3 @@ Persona personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char gru
 
 Persona maxPatrimonioIngresosRef(const std::vector<Persona> &personas);
 Persona maxPatrimonioIngresosVal(std::vector<Persona> personas);
-

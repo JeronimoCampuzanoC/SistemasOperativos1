@@ -5,9 +5,12 @@ CXX := g++
 CXXFLAGS := -Wall -Wextra -pedantic -std=c++17 -g  
 
 # Archivos fuente y objetos
-SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp masJovenDeclaraRenta.cpp listRent.cpp maxPatrNeto.cpp
+SRCS := generador.cpp main.cpp monitor.cpp personalongeva.cpp masJovenDeclaraRenta.cpp listRent.cpp maxPatrNeto.cpp maxPatr.cpp
 OBJS := $(SRCS:.cpp=.o)
 EXEC := programa
+# Regla para maxPatr
+maxPatr.o: maxPatr.cpp maxPatr.h persona.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 # Regla para maxPatrNeto
 maxPatrNeto.o: maxPatrNeto.cpp maxPatrNeto.h persona.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@

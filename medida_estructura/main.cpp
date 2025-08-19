@@ -20,13 +20,22 @@ void mostrarMenu()
     std::cout << "\n3. Buscar persona por ID";
     std::cout << "\n4. Mostrar estadísticas de rendimiento";
     std::cout << "\n5. Exportar estadísticas a CSV";
-    std::cout << "\n6. Persona Más longeva en el País (Por valor y por referencia)";
-    std::cout << "\n7. Persona Más longeva por ciudad (Por valor y por referencia)";
-    std::cout << "\n8. Persona más joven que declara renta (Por valor y por referencia)";
+
+    std::cout << "\n6. Persona más longeva por valor y por referencia";
+    std::cout << "\n7. Persona más longeva por ciudad por valor y por referencia";
+
+    std::cout << "\n8. Persona con mayor patrimonio del pais por valor y por referencia";
+    std::cout << "\n9. Persona con mayor patrimonio por ciudad por valor y por referencia";
+    std::cout << "\n10. Persona con mayor patrimonio por grupo de declaración por valor y por referencia";
 
     std::cout << "\n11. Listar y contar declarantes de renta por calendario tributario";
+
     std::cout << "\n12. Persona con mayor patrimonio neto del pais, patrimonio - deudas";
-    std::cout << "\n9. Salir";
+
+    std::cout << "\n13. Persona más joven declarante de renta por valor y por referencia";
+
+    std::cout << "\n14. Persona con mayor patrimonio y menor ingreso";
+    std::cout << "\n15. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -249,62 +258,174 @@ int main()
 
             break;
         }
+
         case 8:
         {
             if (!personas || personas->empty())
             {
-                std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                std::cout << "\nNo hay Datos disponibles.\n";
                 break;
             }
 
-            // --- Por VALOR ---
-            monitor.iniciar_tiempo();
-            long mem_ini_val = monitor.obtener_memoria();
-
-            auto optVal = masJovenDeclaraRentaValor(*personas);
-
-            double t_val = monitor.detener_tiempo();
-            long mem_val = monitor.obtener_memoria() - mem_ini_val;
-            monitor.registrar("Más joven declarante (Valor)", t_val, mem_val);
-
-            std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR VALOR)\n";
-            if (optVal)
-            {
-                optVal->mostrar(); // usa tu mostrar() de Persona (estructuras)
-                std::cout << "\n";
-            }
-            else
-            {
-                std::cout << "No hay ningún declarante de renta.\n";
-            }
-            std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
-
-            // --- Por REFERENCIA ---
             monitor.iniciar_tiempo();
             long mem_ini_ref = monitor.obtener_memoria();
 
-            const Persona *pref = masJovenDeclaraRentaRef(*personas);
+            const Persona &maxPatrimonio1 = personaMayorPatrimonioPaisRef(*personas);
 
             double t_ref = monitor.detener_tiempo();
             long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
-            monitor.registrar("Más joven declarante (Referencia)", t_ref, mem_ref);
 
-            std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR REFERENCIA)\n";
-            if (pref)
+            monitor.registrar("Mayor patrimonio (país) - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio del pais (POR REFERENCIA)\n";
+            maxPatrimonio1.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona maxValor1 = personaMayorPatrimonioPaisValor(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+
+            monitor.registrar("Mayor patrimonio (país) - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio del pais (POR VALOR)\n";
+            maxValor1.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+            break;
+        }
+        case 9:
+        {
+            if (!personas || personas->empty())
             {
-                pref->mostrar();
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
+
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            auto mapaVal = personaMayorPatrimonioCiudadVal(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+
+            monitor.registrar("Mayor patrimonio por ciudad - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio por ciudad (POR VALOR)\n";
+            std::cout << "Ciudades: " << mapaVal.size()
+                      << " | Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+            for (const auto &kv : mapaVal)
+            {
+                std::cout << "\nCiudad: " << kv.first << "\n";
+                kv.second.mostrarResumen();
                 std::cout << "\n";
             }
-            else
-            {
-                std::cout << "No hay ningún declarante de renta.\n";
-            }
-            std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
 
-            // Comparación
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            auto mapaRef = personaMayorPatrimonioCiudadRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio por ciudad - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio por ciudad (POR REFERENCIA)\n";
+            std::cout << "Ciudades: " << mapaRef.size()
+                      << " | Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+            for (const auto &kv : mapaRef)
+            {
+                std::cout << "\nCiudad: " << kv.first << "\n";
+                kv.second->mostrarResumen();
+                std::cout << "\n";
+            }
+
             std::cout << "\nTIEMPO Y MEMORIA\n";
             std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+
+            break;
+        }
+        case 10:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
+
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona maxValor1 = personaMayorPatrimonioGrupoValor(*personas, 'A');
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Mayor patrimonio del grupo " + std::string(1, 'A') + " - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'A') << " (POR VALOR)\n";
+            maxValor1.mostrar();
+
+            Persona maxValor2 = personaMayorPatrimonioGrupoValor(*personas, 'B');
+
+            t_val = monitor.detener_tiempo();
+            mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Mayor patrimonio del grupo " + std::string(1, 'B') + " - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'B') << " (POR VALOR)\n";
+            maxValor2.mostrar();
+
+            Persona maxValor3 = personaMayorPatrimonioGrupoValor(*personas, 'C');
+
+            t_val = monitor.detener_tiempo();
+            mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Mayor patrimonio del grupo " + std::string(1, 'C') + " - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'C') << " (POR VALOR)\n";
+            maxValor3.mostrar();
+
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona &maxPatrimonio3 = personaMayorPatrimonioGrupoRef(*personas, 'A');
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (" + std::string(1, 'A') + ") - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'A') << " (POR REFERENCIA)\n";
+            maxPatrimonio3.mostrar();
+
+            const Persona &maxPatrimonio4 = personaMayorPatrimonioGrupoRef(*personas, 'B');
+
+            t_ref = monitor.detener_tiempo();
+            mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (" + std::string(1, 'B') + ") - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'B') << " (POR REFERENCIA)\n";
+            maxPatrimonio4.mostrar();
+
+            const Persona &maxPatrimonio5 = personaMayorPatrimonioGrupoRef(*personas, 'C');
+
+            t_ref = monitor.detener_tiempo();
+            mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (" + std::string(1, 'C') + ") - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio de " << std::string(1, 'C') << " (POR REFERENCIA)\n";
+            maxPatrimonio5.mostrar();
+
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+
             break;
         }
         case 11: // Listar y contar declarantes de renta por calendario tributario
@@ -389,7 +510,104 @@ int main()
             std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
             break;
         }
-        case 9:
+
+        case 13:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                break;
+            }
+
+            // --- Por VALOR ---
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            auto optVal = masJovenDeclaraRentaValor(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+            monitor.registrar("Más joven declarante (Valor)", t_val, mem_val);
+
+            std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR VALOR)\n";
+            if (optVal)
+            {
+                optVal->mostrar(); // usa tu mostrar() de Persona (estructuras)
+                std::cout << "\n";
+            }
+            else
+            {
+                std::cout << "No hay ningún declarante de renta.\n";
+            }
+            std::cout << "Tiempo: " << t_val << " ms | Memoria: " << mem_val << " KB\n";
+
+            // --- Por REFERENCIA ---
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona *pref = masJovenDeclaraRentaRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+            monitor.registrar("Más joven declarante (Referencia)", t_ref, mem_ref);
+
+            std::cout << "\n[STRUCT] Persona más joven que DECLARA renta (POR REFERENCIA)\n";
+            if (pref)
+            {
+                pref->mostrar();
+                std::cout << "\n";
+            }
+            else
+            {
+                std::cout << "No hay ningún declarante de renta.\n";
+            }
+            std::cout << "Tiempo: " << t_ref << " ms | Memoria: " << mem_ref << " KB\n";
+
+            // Comparación
+            std::cout << "\nTIEMPO Y MEMORIA\n";
+            std::cout << "Valor:      " << t_val << " ms | " << mem_val << " KB\n";
+            std::cout << "Referencia: " << t_ref << " ms | " << mem_ref << " KB\n";
+            break;
+        }
+        case 14:
+        {
+            if (!personas || personas->empty())
+            {
+                std::cout << "\nNo hay Datos disponibles.\n";
+                break;
+            }
+
+            monitor.iniciar_tiempo();
+            long mem_ini_val = monitor.obtener_memoria();
+
+            Persona maxPatrimonioIngresos2 = maxPatrimonioIngresosVal(*personas);
+
+            double t_val = monitor.detener_tiempo();
+            long mem_val = monitor.obtener_memoria() - mem_ini_val;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por valor", t_val, mem_val);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR VALOR)\n";
+            maxPatrimonioIngresos2.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_val << " ms, Memoria Usada: " << mem_val << "\n";
+
+            monitor.iniciar_tiempo();
+            long mem_ini_ref = monitor.obtener_memoria();
+
+            const Persona &maxPatrimonioIngresos = maxPatrimonioIngresosRef(*personas);
+
+            double t_ref = monitor.detener_tiempo();
+            long mem_ref = monitor.obtener_memoria() - mem_ini_ref;
+
+            monitor.registrar("Mayor patrimonio (país) con menores ingresos - por referencia", t_ref, mem_ref);
+
+            std::cout << "\nPersona con mayor patrimonio del pais con menores ingresos (POR REFERENCIA)\n";
+            maxPatrimonioIngresos.mostrar();
+            std::cout << "Tiempo de Ejecución: " << t_ref << " ms, Memoria Usada: " << mem_ref << "\n";
+
+            break;
+        }
+        case 15:
             std::cout << "Saliendo...\n";
             break;
 
@@ -405,7 +623,7 @@ int main()
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
 
-    } while (opcion != 9);
+    } while (opcion != 15);
 
     return 0;
 }

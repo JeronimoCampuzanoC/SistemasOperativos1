@@ -1,7 +1,7 @@
 #include "maxPatr.h"
 #include <stdexcept>
 
-int extraerUltimosDigitos(const std::string &id)
+int extraerUltimosDigitos1(const std::string &id)
 {
     if (id.length() < 2)
         return -1;
@@ -17,9 +17,9 @@ int extraerUltimosDigitos(const std::string &id)
     }
 }
 
-char determinarGrupo(const std::string &id)
+char determinarGrupo1(const std::string &id)
 {
-    int ultimosDigitos = extraerUltimosDigitos(id);
+    int ultimosDigitos = extraerUltimosDigitos1(id);
 
     if (ultimosDigitos == -1)
         return 'X'; // Error en formato
@@ -149,7 +149,7 @@ Persona personaMayorPatrimonioGrupoRef(const std::vector<Persona> &personas, cha
     const Persona *mayor = nullptr;
     for (const auto &persona : personas)
     {
-        if (determinarGrupo(persona.id) == grupoDeclaracion)
+        if (determinarGrupo1(persona.id) == grupoDeclaracion)
         {
             if (!mayor || persona.patrimonio > mayor->patrimonio)
             {
@@ -175,7 +175,7 @@ Persona personaMayorPatrimonioGrupoValor(std::vector<Persona> personas, char gru
     bool encontrado = false;
     for (const auto &persona : personas)
     {
-        if (determinarGrupo(persona.id) == grupoDeclaracion)
+        if (determinarGrupo1(persona.id) == grupoDeclaracion)
         {
             if (!encontrado || persona.patrimonio > mayor.patrimonio)
             {
